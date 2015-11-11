@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Githubandroidsdk by kapullo13</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Githubandroidsdk</h1>
+      <h2 class="project-tagline">Android SDK for Gitub API</h2>
+      <a href="https://github.com/kapullo13/GithubAndroidSdk" class="btn">View on GitHub</a>
+      <a href="https://github.com/kapullo13/GithubAndroidSdk/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/kapullo13/GithubAndroidSdk/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a href="https://bintray.com/alorma/maven/github-sdk/_latestVersion"> <img src="https://api.bintray.com/packages/alorma/maven/github-sdk/images/download.svg" alt="Download"> </a></p>
+
+<h1>
+<a id="githubandroidsdk" class="anchor" href="#githubandroidsdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>GithubAndroidSdk</h1>
+
+<p><a href="https://gitter.im/gitskarios/GithubAndroidSdk?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/gitskarios/GithubAndroidSdk"></a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>USAGE</h2>
+
+<p>You should be using <code>jCenter()</code> as a repository for your libraries, if not, add this to your main <code>build.gradle</code>:</p>
+
+<div class="highlight highlight-source-groovy"><pre>
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+    classpath <span class="pl-s"><span class="pl-pds">'</span>com.android.tools.build:gradle:X.X.X<span class="pl-pds">'</span></span>
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+</pre></div>
+
+<p>Or add repository url in your top-level <code>build.gradle</code></p>
+
+<div class="highlight highlight-source-groovy"><pre>maven {
+    url  <span class="pl-s"><span class="pl-pds">"</span>http://dl.bintray.com/alorma/maven<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p>Add dependency in your project <code>build.gradle</code></p>
+
+<div class="highlight highlight-source-groovy"><pre>
+
+    compile <span class="pl-s"><span class="pl-pds">'</span>com.github.alorma:github-sdk:1.3.1<span class="pl-pds">'</span></span></pre></div>
+
+<p>Or grab it via maven</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.github.alorma&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;github-sdk&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.3.1&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">type</span>&gt;apklib&lt;/<span class="pl-ent">type</span>&gt;
+    &lt;<span class="pl-ent">scope</span>&gt;compile&lt;/<span class="pl-ent">scope</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;
+&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.github.alorma&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;github-sdk&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.3.1&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">type</span>&gt;jar&lt;/<span class="pl-ent">type</span>&gt;
+    &lt;<span class="pl-ent">scope</span>&gt;provided&lt;/<span class="pl-ent">scope</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="fork" class="anchor" href="#fork" aria-hidden="true"><span class="octicon octicon-link"></span></a>FORK</h2>
+
+<p>In order to use this sdk, you must enable three metadata keys in your <code>AndroidManifest.xml</code></p>
+
+<pre><code>&lt;meta-data
+    android:name="com.alorma.github.sdk.client"
+    android:value="@string/gh_client_id"/&gt;
+
+&lt;meta-data
+    android:name="com.alorma.github.sdk.secret"
+    android:value="@string/gh_client_secret"/&gt;
+
+&lt;meta-data
+    android:name="com.alorma.github.sdk.oauth"
+    android:value="@string/gh_client_callback"/&gt;
+</code></pre>
+
+<p>In Gitskarios, this keys are hidden from repository, so you should create your own string files, or place it directly in <code>value</code></p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>EXAMPLE</h2>
+
+<p>Get repositories list:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">GithubReposClient</span> client <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">UserReposClient</span>(getActivity(), username);
+client<span class="pl-k">.</span>setOnResultCallback(callback);
+client<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Paginated:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">UserReposClient</span> client <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">UserReposClient</span>(getActivity(), username, page);
+client<span class="pl-k">.</span>executeSync();</pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>LICENSE</h2>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2015 Bernat Borrás Paronella</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/kapullo13/GithubAndroidSdk">Githubandroidsdk</a> is maintained by <a href="https://github.com/kapullo13">kapullo13</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker(" UA-000000-01");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
